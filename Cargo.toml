@@ -1,0 +1,24 @@
+[package]
+name = "rust-pcap-log"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+description = "Bounded passive TCP/UDP session logger using libpcap"
+
+[dependencies]
+pcap = "=2.4.0"
+libc = "=0.2.191"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "rust-pcap-log"
+path = "src/main.rs"

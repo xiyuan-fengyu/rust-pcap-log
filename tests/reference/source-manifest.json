@@ -1,0 +1,16 @@
+{
+  "src/local_addresses.py": "357a9f38c84b0382e391c30abeec62ae1f9fb90ba398a3e4ca359eb3a831f3fe",
+  "src/formatter.py": "ffd547beae8e01552219740cd90ac0c47e3b9fb442165e02c712c90f9b4a4a31",
+  "src/config.py": "767ab4298ee8a8dc7b6d67897237d4a79b2060fbcd1807db57fbb5c7f87ba9e2",
+  "src/entrypoint.py": "c05425f0b2abd86e26c597b7d1488b5add45ce095f29785ffee76571aff897de",
+  "tests/pcap_fixture.py": "fc68c6d41ddeba8986456ff296d904faa013c3d99665e1088a778b28b200f9b8",
+  "tests/test_unit.py": "1af405e4d4307353988031e720768ea5f4de0d049b43b1929ffc82b04ce5cc75",
+  "tests/test_supervisor.py": "fad0f5de617078a0244b77ffe70c98aa685f88cd8eb84a6cbd477a7653559880",
+  "tests/test_local_addresses.py": "bd9ff14276f627551bd47f658e636f64c00b13e05df41517094cab5d62ba7797",
+  "tests/benchmark_memory.py": "fadaef58f2ec385ebc2b23d5bcdfd5e635b614706c0a552e66d1a89ec2354847",
+  "tests/test_docker.py": "80c475ae720b1d23ec0d16015a16e12158cf033c84ee5a12e4a1cad37ff50401",
+  "zeek/monitor.zeek": "8ed51037be258437ec2a6fee3114c1f905d15d01ab36eadf5d645219c0978e6f",
+  "docs/runs/2026-10-25-memory.md": "d736fcad3edc53dc5073fce730313f472351f95c5d5ee172b6870b863f0958fd",
+  "docs/runs/2026-10-25-local-wildcard.md": "bf31a42645fea70410fb4aef880874b53ee25f7b267675905b80dec6cf2f143d",
+  "docs/runs/2026-10-25-implementation.md": "d77a1e05c79bd689993aa97d162a1ddb682b997f37e95a090ca4fe76fa03fac2"
+}

@@ -1,0 +1,10 @@
+{
+  "archive": ".artifacts/rust-pcap-log-linux-amd64.tar.gz",
+  "bytes": 35827367,
+  "sha256": "0294d2cab2bb95b896b920cb6764a151fbbd0ecae0cfee17033cfdfb41939a31",
+  "verified_config_image_id": "sha256:aaf23a7e5abb7eeb4b980c8df3f91052d122fafbaf25e3e53d201e7cde8a4683",
+  "repo_tags": [
+    "rust-pcap-log:test"
+  ],
+  "platform": "linux/amd64"
+}

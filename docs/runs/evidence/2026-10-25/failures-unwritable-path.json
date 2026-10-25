@@ -1,0 +1,4 @@
+{
+  "stderr": "[rust-pcap-log] fatal: Read-only file system (os error 30)\n",
+  "exit": 1
+}

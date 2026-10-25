@@ -1,0 +1,6 @@
+zeek version 9.0.0
+767ab4298ee8a8dc7b6d67897237d4a79b2060fbcd1807db57fbb5c7f87ba9e2  /opt/zeek-monitor/src/config.py
+c05425f0b2abd86e26c597b7d1488b5add45ce095f29785ffee76571aff897de  /opt/zeek-monitor/src/entrypoint.py
+ffd547beae8e01552219740cd90ac0c47e3b9fb442165e02c712c90f9b4a4a31  /opt/zeek-monitor/src/formatter.py
+357a9f38c84b0382e391c30abeec62ae1f9fb90ba398a3e4ca359eb3a831f3fe  /opt/zeek-monitor/src/local_addresses.py
+8ed51037be258437ec2a6fee3114c1f905d15d01ab36eadf5d645219c0978e6f  /opt/zeek-monitor/zeek/monitor.zeek

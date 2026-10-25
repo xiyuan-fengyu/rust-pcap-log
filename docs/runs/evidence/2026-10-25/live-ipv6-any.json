@@ -1,0 +1,4 @@
+{
+  "stdout": "24000|80|80\n24003|80|80\n24002|80|80\n24004|80|80\n24001|80|80\n",
+  "stderr": "[rust-pcap-log] ready: libpcap link=113 buffer_mb=8 snaplen=262144 promisc=false live=true timezone=UTC thread_count=1\n[rust-pcap-log] stats: phase=final frames=10 parsed=10 accepted=10 filtered=0 emitted=5 active=0 capacity=0 timers=0 peak=5 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=800 reused=0\n[rust-pcap-log] capture: received=20 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n"
+}

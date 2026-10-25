@@ -1,0 +1,12 @@
+start 1 zeek-monitor:memory-optimized extended False
+verified 2000 {'idle': '58.31MiB / 23.46GiB', 'monitored_2000': '59.86MiB / 23.46GiB', 'plus_unmonitored_10000': '80.1MiB / 23.46GiB'}
+start 1 rust-pcap-log:test extended False
+verified 2000 {'idle': '1.145MiB / 23.46GiB', 'monitored_2000': '1.793MiB / 23.46GiB', 'plus_unmonitored_10000': '1.793MiB / 23.46GiB'}
+start 2 rust-pcap-log:test extended False
+verified 2000 {'idle': '1.387MiB / 23.46GiB', 'monitored_2000': '1.785MiB / 23.46GiB', 'plus_unmonitored_10000': '1.781MiB / 23.46GiB'}
+start 2 zeek-monitor:memory-optimized extended False
+verified 2000 {'idle': '58.52MiB / 23.46GiB', 'monitored_2000': '60.23MiB / 23.46GiB', 'plus_unmonitored_10000': '80.52MiB / 23.46GiB'}
+start 3 zeek-monitor:memory-optimized extended False
+verified 2000 {'idle': '57.67MiB / 23.46GiB', 'monitored_2000': '59.84MiB / 23.46GiB', 'plus_unmonitored_10000': '80.46MiB / 23.46GiB'}
+start 3 rust-pcap-log:test extended False
+verified 2000 {'idle': '1.227MiB / 23.46GiB', 'monitored_2000': '1.797MiB / 23.46GiB', 'plus_unmonitored_10000': '1.789MiB / 23.46GiB'}

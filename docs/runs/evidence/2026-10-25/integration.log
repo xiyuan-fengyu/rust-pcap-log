@@ -1,0 +1,16 @@
+test_blocked_output_has_deadline (test_failures.Failures.test_blocked_output_has_deadline) ... ok
+test_fifo_log_rejected_without_waiting (test_failures.Failures.test_fifo_log_rejected_without_waiting) ... ok
+test_fragment_limit_no_fake_session (test_failures.Failures.test_fragment_limit_no_fake_session) ... ok
+test_invalid_ip_checksum_rejected_before_session (test_failures.Failures.test_invalid_ip_checksum_rejected_before_session) ... ok
+test_local_discovery_failure_and_empty_fail_closed (test_failures.Failures.test_local_discovery_failure_and_empty_fail_closed) ... ok
+test_output_write_failure (test_failures.Failures.test_output_write_failure) ... ok
+test_session_limit_no_eviction_as_complete_record (test_failures.Failures.test_session_limit_no_eviction_as_complete_record) ... ok
+test_unwritable_log_path (test_failures.Failures.test_unwritable_log_path) ... ok
+test_ipv6_loopback_any_cooked (test_live.Live.test_ipv6_loopback_any_cooked) ... ok
+test_minimum_permissions_and_errors (test_live.Live.test_minimum_permissions_and_errors) ... ok
+test_shared_namespace_rotation_and_append (test_live.Live.test_shared_namespace_rotation_and_append) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 17.445s
+
+OK

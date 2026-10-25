@@ -1,0 +1,120 @@
+[
+    {
+        "Id": "sha256:aaf23a7e5abb7eeb4b980c8df3f91052d122fafbaf25e3e53d201e7cde8a4683",
+        "RepoTags": [
+            "rust-pcap-log:test"
+        ],
+        "RepoDigests": [],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-25T05:16:52.117940731Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TZ=UTC"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/rust-pcap-log"
+            ],
+            "StopSignal": "SIGTERM"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 87080015,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/sidnil0f0zaqnot8mwfxz1yeh/diff:/var/lib/docker/overlay2/7ffec966c86e62261fdb2f07d8e25c01dfe36720ab5f4bec1d44aa4138551492/diff",
+                "MergedDir": "/var/lib/docker/overlay2/60srisuepekt3jyj4bgahqmy6/merged",
+                "UpperDir": "/var/lib/docker/overlay2/60srisuepekt3jyj4bgahqmy6/diff",
+                "WorkDir": "/var/lib/docker/overlay2/60srisuepekt3jyj4bgahqmy6/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:9b35de7893378218e365c34c2c735fb0032a859112fb7345ca8ea73f9aa1db70",
+                "sha256:c44301e3c1b6fa20ddbf3c70986e68ffefe61870833e72c8e04ef905cc24c389",
+                "sha256:52a32ee76ae7a887eb22df4e78eed18be208c0c30b5b4d934b9706752e7ce361"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-25T05:16:52.161861751Z"
+        }
+    },
+    {
+        "Id": "sha256:99eb5cf3139a42f856d56a9e2a19554ebf656d920a67835d9840f631ff4b5031",
+        "RepoTags": [
+            "zeek-monitor:memory-optimized"
+        ],
+        "RepoDigests": [],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-25T04:17:38.070838641Z",
+        "Config": {
+            "User": "root",
+            "Env": [
+                "PATH=/usr/local/zeek/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "PYTHONPATH=/usr/local/zeek/lib/zeek/python:",
+                "PYTHONUNBUFFERED=1",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "MALLOC_ARENA_MAX=2",
+                "TZ=UTC",
+                "CAPTURE_INTERFACE=eth0",
+                "LOG_FILE=/dev/stdout"
+            ],
+            "Entrypoint": [
+                "python3",
+                "/opt/zeek-monitor/src/entrypoint.py"
+            ],
+            "WorkingDir": "/opt/zeek-monitor",
+            "Labels": {
+                "org.opencontainers.image.authors": "info@zeek.org",
+                "org.opencontainers.image.created": "2026-09-14T18:08:31+00:00",
+                "org.opencontainers.image.description": "Zeek is a powerful network analysis framework that is much different from the typical IDS you may know.",
+                "org.opencontainers.image.documentation": "https://docs.zeek.org",
+                "org.opencontainers.image.licenses": "BSD-3-Clause",
+                "org.opencontainers.image.revision": "970787a9f10896ff65c4758444d87bcf53eba4b7",
+                "org.opencontainers.image.source": "https://github.com/zeek/zeek",
+                "org.opencontainers.image.title": "Zeek",
+                "org.opencontainers.image.url": "https://zeek.org",
+                "org.opencontainers.image.vendor": "The Zeek Project",
+                "org.opencontainers.image.version": "9.0.0"
+            },
+            "StopSignal": "SIGTERM",
+            "Shell": [
+                "/bin/sh",
+                "-x",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 536196428,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/zg4zehqdnwtg9hefh48g3fn81/diff:/var/lib/docker/overlay2/zywld062yevqwjh1sxhjt1y46/diff:/var/lib/docker/overlay2/f5qn5soe10td5tmt1x4x5ginm/diff:/var/lib/docker/overlay2/25dd448a299206d1d74de043cc2f248fae7f706f6b886840e3f0fb6054def4ef/diff:/var/lib/docker/overlay2/d9cf3a450ba480fdf15e379f4284d85fda04c109789d7b13a1049a54d2fb292e/diff:/var/lib/docker/overlay2/314424051f0c08ccb6366fc7ea119852d83f583b8e4bd6ce4770062eed69c5d3/diff:/var/lib/docker/overlay2/009a7404708ce46c9b795ecc4d9074318be31f3447fdb7963d6c2d1abb6b3560/diff:/var/lib/docker/overlay2/effc74093cc559db4527979a2364a220f551df1f38aee1be7e121cc1f0e73b7f/diff:/var/lib/docker/overlay2/f7ac633a51a7ae56a48f57afbba7901a31b86b2c459b3dda9fce5d63f7e3a7fc/diff",
+                "MergedDir": "/var/lib/docker/overlay2/gprpfyafzw56ck70mloeoi0v0/merged",
+                "UpperDir": "/var/lib/docker/overlay2/gprpfyafzw56ck70mloeoi0v0/diff",
+                "WorkDir": "/var/lib/docker/overlay2/gprpfyafzw56ck70mloeoi0v0/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:411a86676185cb54d695a805b238194a64e9b77e0c723f3802fbb87d333ea0b3",
+                "sha256:824f4ba5d3bcae983244d742e66a1dd64a663da38bae9d54f82b665761cd877d",
+                "sha256:e08e096c97dfb6f03da005c787e99aaee6d33631ed5f8b54e19f2c5cd626fef1",
+                "sha256:b7080f0fb442deeda9992d7e00e79d7d30da798bdd5c62f98d4b4366506fe64a",
+                "sha256:3e6539733d444d38ac7e394f209e20a40b28d75ca25654ba75340c18fc6817cd",
+                "sha256:e7d5abe5f6b86a75cde76dea593a7fb172908256537dcd3ad4d011f533f82fab",
+                "sha256:882116395be4696f46e841a786200b4cfec0e631abe8861e0768c6ee13f2c919",
+                "sha256:d48c9365eef492bf7c5b9fcce79bfea9027bb02b60ad5a993f17de59ea67f33d",
+                "sha256:8dd69b013c1c452069b652d15b7ed503880683dc71704c58a0ef399c2f489bc9",
+                "sha256:fd60b44247ac62865da398ace821aa0bd4132fa87dd8b4c6185c2b5efcafde71"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-25T04:17:38.09520433Z"
+        }
+    }
+]

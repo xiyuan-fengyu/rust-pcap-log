@@ -1,0 +1,12 @@
+start 1 zeek-monitor:memory-optimized extended True
+verified 26000 {'idle': '58.18MiB / 23.46GiB', 'high_20000': '96.16MiB / 23.46GiB', 'expired_high': '98.05MiB / 23.46GiB', 'cycle_1_active': '97.2MiB / 23.46GiB', 'cycle_1_expired': '97.65MiB / 23.46GiB', 'cycle_2_active': '97.24MiB / 23.46GiB', 'cycle_2_expired': '97.79MiB / 23.46GiB', 'cycle_3_active': '97.26MiB / 23.46GiB', 'cycle_3_expired': '97.45MiB / 23.46GiB'}
+start 1 rust-pcap-log:test extended True
+verified 26000 {'idle': '1.43MiB / 23.46GiB', 'high_20000': '8.5MiB / 23.46GiB', 'expired_high': '4.957MiB / 23.46GiB', 'cycle_1_active': '4.168MiB / 23.46GiB', 'cycle_1_expired': '4.527MiB / 23.46GiB', 'cycle_2_active': '4.168MiB / 23.46GiB', 'cycle_2_expired': '4.547MiB / 23.46GiB', 'cycle_3_active': '4.172MiB / 23.46GiB', 'cycle_3_expired': '4.363MiB / 23.46GiB'}
+start 2 rust-pcap-log:test extended True
+verified 26000 {'idle': '1008KiB / 23.46GiB', 'high_20000': '8.504MiB / 23.46GiB', 'expired_high': '3.078MiB / 23.46GiB', 'cycle_1_active': '2.719MiB / 23.46GiB', 'cycle_1_expired': '2.84MiB / 23.46GiB', 'cycle_2_active': '2.727MiB / 23.46GiB', 'cycle_2_expired': '2.73MiB / 23.46GiB', 'cycle_3_active': '2.723MiB / 23.46GiB', 'cycle_3_expired': '2.738MiB / 23.46GiB'}
+start 2 zeek-monitor:memory-optimized extended True
+verified 26000 {'idle': '58.25MiB / 23.46GiB', 'high_20000': '96.17MiB / 23.46GiB', 'expired_high': '97.24MiB / 23.46GiB', 'cycle_1_active': '96.61MiB / 23.46GiB', 'cycle_1_expired': '96.64MiB / 23.46GiB', 'cycle_2_active': '96.56MiB / 23.46GiB', 'cycle_2_expired': '96.56MiB / 23.46GiB', 'cycle_3_active': '96.57MiB / 23.46GiB', 'cycle_3_expired': '96.94MiB / 23.46GiB'}
+start 3 zeek-monitor:memory-optimized extended True
+verified 26000 {'idle': '57.93MiB / 23.46GiB', 'high_20000': '96.17MiB / 23.46GiB', 'expired_high': '97.15MiB / 23.46GiB', 'cycle_1_active': '96.59MiB / 23.46GiB', 'cycle_1_expired': '97.29MiB / 23.46GiB', 'cycle_2_active': '96.59MiB / 23.46GiB', 'cycle_2_expired': '96.95MiB / 23.46GiB', 'cycle_3_active': '96.6MiB / 23.46GiB', 'cycle_3_expired': '96.96MiB / 23.46GiB'}
+start 3 rust-pcap-log:test extended True
+verified 26000 {'idle': '1.148MiB / 23.46GiB', 'high_20000': '8.766MiB / 23.46GiB', 'expired_high': '4.52MiB / 23.46GiB', 'cycle_1_active': '4.172MiB / 23.46GiB', 'cycle_1_expired': '4.293MiB / 23.46GiB', 'cycle_2_active': '4.176MiB / 23.46GiB', 'cycle_2_expired': '4.242MiB / 23.46GiB', 'cycle_3_active': '4.23MiB / 23.46GiB', 'cycle_3_expired': '4.16MiB / 23.46GiB'}

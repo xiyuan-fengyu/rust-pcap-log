@@ -1,0 +1,12 @@
+[
+  {
+    "empty": false,
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: Input/output error (os error 5)\n"
+  },
+  {
+    "empty": true,
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: local address discovery returned no addresses; refusing wildcard\n"
+  }
+]

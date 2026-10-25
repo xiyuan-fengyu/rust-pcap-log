@@ -1,0 +1,118 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.24kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/rust:1.95-bookworm
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 91B done
+#3 DONE 0.0s
+
+#4 [build 1/7] FROM docker.io/library/rust:1.95-bookworm
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 11.08kB done
+#5 DONE 0.0s
+
+#6 [build 4/7] COPY Cargo.toml Cargo.lock ./
+#6 CACHED
+
+#7 [build 2/7] RUN sed -i s,http://deb.debian.org,https://deb.debian.org,g /etc/apt/sources.list.d/debian.sources && apt-get -o Acquire::Retries=3 -o Acquire::https::Timeout=30 update && apt-get -o Acquire::Retries=3 -o Acquire::https::Timeout=30 install -y --no-install-recommends libpcap-dev && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [build 3/7] WORKDIR /work
+#8 CACHED
+
+#9 [build 5/7] RUN --mount=type=cache,id=rpl-cargo-registry,target=/usr/local/cargo/registry cargo fetch --locked --target="$(rustc -vV | sed -n 's/^host: //p')"
+#9 CACHED
+
+#10 [build 6/7] COPY src ./src
+#10 DONE 0.0s
+
+#11 [build 7/7] RUN --mount=type=cache,id=rpl-cargo-registry,target=/usr/local/cargo/registry cargo build --release --locked
+#11 0.452    Compiling memchr v2.8.3
+#11 0.453    Compiling regex-syntax v0.8.11
+#11 0.453    Compiling cfg-if v1.0.5
+#11 0.455    Compiling libc v0.2.191
+#11 0.456    Compiling pkg-config v0.3.34
+#11 0.458    Compiling bitflags v1.3.2
+#11 0.518    Compiling libloading v0.8.9
+#11 1.639    Compiling aho-corasick v1.1.5
+#11 3.084    Compiling errno v0.2.8
+#11 3.719    Compiling regex-automata v0.4.18
+#11 6.489    Compiling regex v1.13.1
+#11 7.010    Compiling pcap v2.4.0
+#11 7.572    Compiling rust-pcap-log v0.1.0 (/work)
+#11 18.13     Finished `release` profile [optimized] target(s) in 17.77s
+#11 DONE 18.2s
+
+#12 [test 1/1] RUN --mount=type=cache,id=rpl-cargo-registry,target=/usr/local/cargo/registry cargo test --locked
+#12 0.268    Compiling memchr v2.8.3
+#12 0.268    Compiling regex-syntax v0.8.11
+#12 0.270    Compiling cfg-if v1.0.5
+#12 0.271    Compiling libc v0.2.191
+#12 0.273    Compiling pkg-config v0.3.34
+#12 0.273    Compiling bitflags v1.3.2
+#12 0.310    Compiling libloading v0.8.9
+#12 1.020    Compiling aho-corasick v1.1.5
+#12 2.074    Compiling errno v0.2.8
+#12 2.695    Compiling regex-automata v0.4.18
+#12 5.041    Compiling regex v1.13.1
+#12 5.571    Compiling pcap v2.4.0
+#12 6.102    Compiling rust-pcap-log v0.1.0 (/work)
+#12 8.261     Finished `test` profile [unoptimized + debuginfo] target(s) in 8.02s
+#12 8.264      Running unittests src/lib.rs (target/debug/deps/rust_pcap_log-f8b7a59634bba4d4)
+#12 8.266 
+#12 8.266 running 23 tests
+#12 8.271 test config::discovery_tests::real_namespace_discovery_is_not_all_hosts ... ok
+#12 8.271 test config::tests::defaults_and_limits ... ok
+#12 8.271 test config::tests::ipv6_mapped ... ok
+#12 8.272 test config::tests::invalid_config ... ok
+#12 8.274 test config::tests::rules_merge_direction ... ok
+#12 8.274 test engine::more_tests::both_endpoints_and_neither_excluded ... ok
+#12 8.274 test engine::more_tests::state_layout_is_fixed ... ok
+#12 8.274 test engine::tests::direction_and_counter ... ok
+#12 8.274 test engine::tests::incomplete_handshake_fixed_timeout ... ok
+#12 8.274 test engine::tests::one_fin_not_removed_tail_ack_counted ... ok
+#12 8.274 test engine::tests::rst_lingers_and_drain_errors_propagate ... ok
+#12 8.274 test engine::tests::syn_retransmit_and_reuse ... ok
+#12 8.274 test output::render_tests::render_all_fields_and_no_recursive_expansion ... ok
+#12 8.274 test output::tests::templates ... ok
+#12 8.274 test output::tests::append_and_rotation ... ok
+#12 8.274 test engine::tests::excluded_flows_no_state_and_limit_no_eviction ... ok
+#12 8.274 test packet::tests::all_short_prefixes_no_panic ... ok
+#12 8.274 test packet::tests::bounds_and_expiry ... ok
+#12 8.274 test packet::tests::checksum_vectors ... ok
+#12 8.275 test packet::tests::fragments_out_of_order_duplicates ... ok
+#12 8.275 test packet::tests::conflicting_overlap ... ok
+#12 8.303 test engine::tests::timeout_index_bounded_and_udp_idle ... ok
+#12 8.306 test packet::fuzz_tests::deterministic_malformed_smoke ... ok
+#12 8.306 
+#12 8.306 test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+#12 8.306 
+#12 8.307      Running unittests src/main.rs (target/debug/deps/rust_pcap_log-13985599d0d6d65a)
+#12 8.310 
+#12 8.310 running 0 tests
+#12 8.310 
+#12 8.310 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+#12 8.310 
+#12 8.310    Doc-tests rust_pcap_log
+#12 8.357 
+#12 8.357 running 0 tests
+#12 8.357 
+#12 8.357 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+#12 8.357 
+#12 DONE 8.5s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.6s done
+#13 writing image sha256:f0056e7b2ad66e8062dc010de0a92c38b274b8b6c1720e4c661ac1b9d348200a done
+#13 naming to docker.io/library/rust-pcap-log:build-test done
+#13 DONE 0.6s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/p0yo5hggsuf2ada3wtvbshul0

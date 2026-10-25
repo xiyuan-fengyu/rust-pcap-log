@@ -1,0 +1,19 @@
+{
+  "old_source_manifest_unchanged": true,
+  "build_source_matches_workspace": true,
+  "runtime_image": "sha256:aaf23a7e5abb7eeb4b980c8df3f91052d122fafbaf25e3e53d201e7cde8a4683",
+  "production_actions": "none",
+  "source_sha256": {
+    "src/config.rs": "2b4feaaddd1fdc01885f059224f4d6832aaab811ec4e9f0d494c1862f31d7d0a",
+    "src/lib.rs": "e4f536f87d77730dc69a73f4ace7d74dc20676e89444f6952faa6d7d4f54ec63",
+    "src/output.rs": "c7cbac245e7dd5b81c2b1a76c4640efd838742505d7908f949865cda27a25848",
+    "src/main.rs": "afab08351879fc27e5449393e5e75d301d38bffd8a6262b13efa85244d3c60fb",
+    "src/packet.rs": "babfdb7d49cf824860ee86a9327d425df69b05d08571bd738eaa5e08ec96113a",
+    "src/engine.rs": "cbb8b26ec2001220387cb6f633a21969ba20cce46ada9b01d1c14fedfc59e68a",
+    "Cargo.toml": "440dfbd4abe4ea84981d40c563155e6db688989c6ec17cdf4041b4da79f3ea17",
+    "Cargo.lock": "08be46be54241a4c874fae1d182d2ac11824ff6c7facad375870bb29de343d83",
+    "Dockerfile": "3fce833899647921775fee53ab280611fce03192328cd8e4afae6c53ff55c445"
+  },
+  "remaining_test_containers": [],
+  "remaining_test_networks": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: libpcap error: socket: Operation not permitted\n"
+  },
+  {
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: libpcap error: No such device exists\n"
+  },
+  {
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: at least one LISTEN_<number> required\n"
+  },
+  {
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: LOG_FORMAT: unknown variable oops\n"
+  },
+  {
+    "exit": 1,
+    "stderr": "[rust-pcap-log] fatal: libpcap error: socket: Operation not permitted\n"
+  }
+]

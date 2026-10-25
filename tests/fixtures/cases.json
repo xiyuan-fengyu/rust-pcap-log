@@ -1,0 +1,289 @@
+{
+  "partial": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "half_close": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "full_close": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "rst_tail": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "retransmit": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "syn_reuse": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "closed_reuse": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "midstream_syn_reuse": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "syn_timeout": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_idle_timeout": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "udp_timeout": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_atomic_fragment": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "fragment_duration": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "synack_unfinished": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ack_midstream_tail": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "rst_repeat_tail": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "synack_first": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_fragments": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_out_of_order": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_duplicate": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_missing_first": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_conflict": {
+    "mode": "equal",
+    "note": "first-arrival bytes win; overlap diagnostics retained",
+    "env": {}
+  },
+  "ipv6_fragments": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_out_of_order": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_duplicate": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_missing_first": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_conflict": {
+    "mode": "equal",
+    "note": "first-arrival bytes win; overlap diagnostics retained",
+    "env": {}
+  },
+  "fragment_expiry": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_fragment_options": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv4_fragment_options_ordered": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_fragments": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_fragment_extension_after": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_fragment_extension_before": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipv6_extensions": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "vlan": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "qinq": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "sll": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "sll2": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "raw": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "truncated": {
+    "mode": "gate",
+    "note": "fail closed on missing IP bytes",
+    "env": {}
+  },
+  "malformed": {
+    "mode": "gate",
+    "note": "invalid total IP length",
+    "env": {}
+  },
+  "bad_checksum": {
+    "mode": "checksum",
+    "note": "Zeek creates a zero-byte session for invalid L4 checksum",
+    "env": {}
+  },
+  "udp_bad": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "udp_bad_first": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "udp_bad_last": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "udp_bad_both": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_bad": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_bad_first": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_bad_last": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "tcp_bad_both": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "ipip": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "gre": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "gre_ethernet": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "vxlan": {
+    "mode": "equal",
+    "note": "",
+    "env": {
+      "LISTEN_99": "udp 192.0.2.2 4789"
+    }
+  },
+  "geneve_gate": {
+    "mode": "gate",
+    "note": "Geneve is not yet implemented; fail closed",
+    "env": {}
+  },
+  "overlap_first_lower": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  },
+  "overlap_first_higher": {
+    "mode": "equal",
+    "note": "",
+    "env": {}
+  }
+}

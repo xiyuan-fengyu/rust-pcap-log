@@ -146,6 +146,7 @@ pub struct Config {
     pub rules: Rules,
     pub template: Template,
     pub log_file: String,
+    pub log_rotate_suffix: String,
     pub interface: String,
     pub tz: String,
     pub ignore_checksums: bool,
@@ -195,6 +196,8 @@ impl Config {
         if log_file.is_empty() || log_file.contains(['\0', '\r', '\n']) {
             return Err("LOG_FILE: invalid path".into());
         }
+        let log_rotate_suffix = get("LOG_ROTATE_SUFFIX", crate::rotation::DEFAULT_SUFFIX);
+        crate::rotation::validate_suffix(&log_rotate_suffix)?;
         let ignore_checksums = match get("IGNORE_CHECKSUMS", "true")
             .to_ascii_lowercase()
             .as_str()
@@ -210,6 +213,7 @@ impl Config {
             rules: Rules::parse(env, local)?,
             template: Template::parse(&get("LOG_FORMAT", DEFAULT_FORMAT))?,
             log_file,
+            log_rotate_suffix,
             interface,
             tz,
             ignore_checksums,
@@ -321,6 +325,14 @@ mod tests {
     fn defaults_and_limits() {
         let e = env(&[("LISTEN_1", "udp 1.2.3.4 80")]);
         let c = Config::parse(&e, HashSet::new()).unwrap();
+        assert_eq!(c.log_file, "/dev/stdout");
+        assert_eq!(c.log_rotate_suffix, ".%Y%m%d");
+        let mut custom = e.clone();
+        custom.insert("LOG_FILE".into(), "/logs/access.log".into());
+        custom.insert("LOG_ROTATE_SUFFIX".into(), ".%Y-%m-%d.bak".into());
+        let custom = Config::parse(&custom, HashSet::new()).unwrap();
+        assert_eq!(custom.log_file, "/logs/access.log");
+        assert_eq!(custom.log_rotate_suffix, ".%Y-%m-%d.bak");
         assert_eq!(c.pcap_buffer_mb, 8);
         assert_eq!(c.udp_timeout, 60_000_000);
         assert!(c.ignore_checksums);
@@ -331,6 +343,12 @@ mod tests {
             ("IGNORE_CHECKSUMS", "yes"),
             ("TZ", "../../etc/passwd"),
             ("LOG_FORMAT", "$bad"),
+            ("LOG_ROTATE_SUFFIX", ""),
+            ("LOG_ROTATE_SUFFIX", "/%Y%m%d"),
+            ("LOG_ROTATE_SUFFIX", "%Q"),
+            ("LOG_ROTATE_SUFFIX", "%"),
+            ("LOG_ROTATE_SUFFIX", "%n"),
+            ("LOG_ROTATE_SUFFIX", ".bad\n"),
         ] {
             let mut e = e.clone();
             e.insert(k.into(), v.into());

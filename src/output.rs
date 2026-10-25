@@ -1,10 +1,14 @@
-use crate::{Result, engine::Session};
+use crate::{
+    Result,
+    engine::Session,
+    rotation::{self, Rotation},
+};
 use std::{
     fs::{File, OpenOptions},
     io::{self, Write},
     os::{
         fd::{AsRawFd, FromRawFd, IntoRawFd},
-        unix::fs::OpenOptionsExt,
+        unix::fs::{FileTypeExt, OpenOptionsExt},
     },
     path::Path,
     sync::atomic::{AtomicBool, AtomicU32, Ordering},
@@ -214,20 +218,32 @@ fn output_alarm(seconds: u32) {
 pub struct Sink {
     file: File,
     path: String,
-    stdout: bool,
+    suffix: String,
+    rotation: Option<Rotation>,
 }
 impl Sink {
     pub fn new(path: &str) -> Result<Self> {
-        let stdout = matches!(path, "-" | "/dev/stdout" | "stdout");
-        let file = if stdout {
-            // Own a duplicate, never close process stdout itself.
-            let fd = unsafe { libc::dup(1) };
+        Self::with_suffix(path, rotation::DEFAULT_SUFFIX)
+    }
+    pub fn with_suffix(path: &str, suffix: &str) -> Result<Self> {
+        Self::open_at(path, suffix, rotation::now()?)
+    }
+    fn open_at(path: &str, suffix: &str, now: libc::time_t) -> Result<Self> {
+        rotation::validate_suffix(suffix)?;
+        let stream_fd = match path {
+            "-" | "stdout" | "/dev/stdout" | "/dev/fd/1" | "/proc/self/fd/1" => Some(1),
+            "stderr" | "/dev/stderr" | "/dev/fd/2" | "/proc/self/fd/2" => Some(2),
+            _ => None,
+        };
+        let file = if let Some(fd) = stream_fd {
+            // Own a duplicate, never close process stdout/stderr itself.
+            let fd = unsafe { libc::fcntl(fd, libc::F_DUPFD_CLOEXEC, 3) };
             if fd < 0 {
                 return Err(io::Error::last_os_error().into());
             }
             unsafe { File::from_raw_fd(fd) }
         } else {
-            Self::open(path)?
+            Self::open(Path::new(path), false)?
         };
         let fd = file.as_raw_fd();
         unsafe {
@@ -236,28 +252,69 @@ impl Sink {
                 return Err(io::Error::last_os_error().into());
             }
         }
-        Ok(Self {
+        let metadata = file.metadata()?;
+        let rotation = if stream_fd.is_none() && metadata.is_file() {
+            Some(Rotation::new(path, suffix, &metadata, now)?)
+        } else {
+            None
+        };
+        let mut sink = Self {
             file,
             path: path.into(),
-            stdout,
-        })
+            suffix: suffix.into(),
+            rotation,
+        };
+        sink.rotate_at(now)?;
+        Ok(sink)
     }
-    fn open(path: &str) -> Result<File> {
-        if let Some(parent) = Path::new(path).parent() {
+    fn open(path: &Path, exclusive: bool) -> Result<File> {
+        if let Some(parent) = path.parent() {
             if !parent.as_os_str().is_empty() {
                 std::fs::create_dir_all(parent)?;
             }
         }
         let f = OpenOptions::new()
-            .create(true)
+            .create(!exclusive)
+            .create_new(exclusive)
             .append(true)
             .mode(0o640)
             .custom_flags(libc::O_NONBLOCK | libc::O_CLOEXEC)
             .open(path)?;
-        if !f.metadata()?.is_file() {
-            return Err("LOG_FILE must be regular file or stdout".into());
+        if !f.metadata()?.is_file() && !f.metadata()?.file_type().is_char_device() {
+            return Err(
+                "LOG_FILE must be a regular file, character device or stdout/stderr alias".into(),
+            );
         }
         Ok(f)
+    }
+    pub fn rotate_if_due(&mut self) -> Result<()> {
+        if self.rotation.is_none() {
+            return Ok(());
+        }
+        self.rotate_at(rotation::now()?)
+    }
+    fn rotate_at(&mut self, now: libc::time_t) -> Result<()> {
+        if self
+            .rotation
+            .as_ref()
+            .is_none_or(|rotation| rotation.already_checked(now))
+        {
+            return Ok(());
+        }
+        output_alarm(TIMEOUT.load(Ordering::Relaxed));
+        let result = (|| -> Result<()> {
+            if let Some(rotation) = &mut self.rotation {
+                if rotation.archive_if_due(&self.file, now)? {
+                    // Never append to an unexpected file created by another writer.
+                    self.file = Self::open(rotation.path(), true).map_err(|e| {
+                        format!("log rotation: archived old log but cannot create new file: {e}")
+                    })?;
+                }
+            }
+            Ok(())
+        })();
+        output_alarm(0);
+        result
     }
     pub fn finish(self) -> Result<()> {
         // Check close errors too. This is NOT an fsync durability guarantee.
@@ -268,12 +325,11 @@ impl Sink {
         Ok(())
     }
     pub fn reopen(&mut self) -> Result<()> {
-        if !self.stdout {
-            self.file = Self::open(&self.path)?;
-        }
+        *self = Self::with_suffix(&self.path, &self.suffix)?;
         Ok(())
     }
     pub fn write(&mut self, mut bytes: &[u8]) -> Result<()> {
+        self.rotate_if_due()?;
         // No queue: backpressure capture, hard-fail after timeout, never silently
         // drop a record. alarm also bounds kernel-blocked regular file IO.
         output_alarm(TIMEOUT.load(Ordering::Relaxed));
@@ -347,3 +403,6 @@ mod tests {
         assert_eq!(lines,["UDPsuffix $remote_addr 127.0.0.2:1234 127.0.0.1:53 64/0 0.100 wall\n"]);
     }
 }
+
+#[cfg(test)]
+mod rotation_tests;

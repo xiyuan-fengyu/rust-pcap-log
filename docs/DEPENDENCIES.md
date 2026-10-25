@@ -5,7 +5,7 @@ transitive versions/checksums. Linux host-target fetch avoids downloading irrele
 Windows libraries; a scoped BuildKit registry cache does not change runtime contents.
 Rust release binary links libpcap directly. Linux FFI in `output.rs` / `config.rs`
 is narrowly limited to libc address discovery, timezone formatting, POSIX signals,
-fd/poll operations; pointer ownership/signal-safety comments are inline.
+fd/poll operations and Linux renameat2(RENAME_NOREPLACE) for no-clobber daily archives; pointer ownership/signal-safety comments are inline.
 
 Primary references inspected, in addition to actually compiling and testing:
 

@@ -27,7 +27,7 @@ fn run<T: Activated + ?Sized>(mut cap: Capture<T>, config: Config, live: bool) -
     if ![1, 12, 101, 113, 228, 229, 276].contains(&link) {
         return Err(format!("unsupported capture datalink {link}").into());
     }
-    let mut sink = Sink::new(&config.log_file)?;
+    let mut sink = Sink::with_suffix(&config.log_file, &config.log_rotate_suffix)?;
     let mut parser = Parser::new(
         !config.ignore_checksums,
         config.max_fragments,
@@ -53,6 +53,7 @@ fn run<T: Activated + ?Sized>(mut cap: Capture<T>, config: Config, live: bool) -
             if STOP.load(Ordering::SeqCst) {
                 break;
             }
+            sink.rotate_if_due()?;
             if live {
                 clock = start.elapsed().as_micros() as u64;
             }
@@ -213,7 +214,7 @@ fn entry() -> Result<()> {
     let args: Vec<_> = std::env::args().skip(1).collect();
     if args == ["--help"] || args == ["-h"] {
         println!(
-            "rust-pcap-log [--check-config | --read-pcap FILE]\nConfiguration: LISTEN_<number>=tcp|udp IP port[,range], LOG_FILE, LOG_FORMAT, TZ, CAPTURE_INTERFACE, IGNORE_CHECKSUMS, UDP_INACTIVITY_TIMEOUT, SHUTDOWN_TIMEOUT, PCAP_BUFFER_MB, MAX_SESSIONS, MAX_FRAGMENTS, FRAGMENT_CACHE_MB, STATS_INTERVAL"
+            "rust-pcap-log [--check-config | --read-pcap FILE]\nConfiguration: LISTEN_<number>=tcp|udp IP port[,range], LOG_FILE, LOG_ROTATE_SUFFIX, LOG_FORMAT, TZ, CAPTURE_INTERFACE, IGNORE_CHECKSUMS, UDP_INACTIVITY_TIMEOUT, SHUTDOWN_TIMEOUT, PCAP_BUFFER_MB, MAX_SESSIONS, MAX_FRAGMENTS, FRAGMENT_CACHE_MB, STATS_INTERVAL"
         );
         return Ok(());
     }
@@ -231,6 +232,7 @@ fn entry() -> Result<()> {
     };
     let config = Config::from_env()?;
     if check {
+        println!("LOG_FILE={} LOG_ROTATE_SUFFIX={}", config.log_file, config.log_rotate_suffix);
         println!("CAPTURE_INTERFACE={} TZ={} IGNORE_CHECKSUMS={} PCAP_BUFFER_MB={}", config.interface, config.tz, config.ignore_checksums, config.pcap_buffer_mb);
         println!("UDP_INACTIVITY_TIMEOUT={} SHUTDOWN_TIMEOUT={} STATS_INTERVAL={}", config.udp_timeout / 1_000_000, config.shutdown_timeout, config.stats_interval / 1_000_000);
         println!("MAX_SESSIONS={} MAX_FRAGMENTS={} FRAGMENT_CACHE_MB={}", config.max_sessions, config.max_fragments, config.fragment_bytes / 1024 / 1024);

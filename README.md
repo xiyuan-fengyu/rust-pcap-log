@@ -53,7 +53,9 @@ docker run -d --name my-passive-monitor \
   rust-pcap-log:test
 ```
 
-普通文件示例要求挂载目录对容器 UID/GID 可写。Linux 上 `--cap-drop ALL` 的 root 不能自动绕过文件权限；可准备可写属组并通过 `--group-add <GID>` 授予目录写权限，不要为此增加 DAC_OVERRIDE 或使用全局 chmod 777。
+**挂载整个日志目录**（如上面的 `-v "$PWD/logs:/logs"`），不要只挂载 `access.log` 单个文件：轮转会重命名旧文件并在原路径创建新文件，当前日志和归档都留在宿主机 `./logs/` 中。目录映射用于持久化，定时轮转由容器内程序完成，不需要宿主机 cron/logrotate 或发送 HUP。
+
+普通文件示例要求挂载目录对容器 UID/GID 可写（不仅是日志文件本身可写）。Linux 上 `--cap-drop ALL` 的 root 不能自动绕过文件权限；可准备可写属组并通过 `--group-add <GID>` 授予目录写权限，不要为此增加 DAC_OVERRIDE 或使用全局 chmod 777。
 
 不需要 privileged、NET_ADMIN、host network、host PID 或 Docker socket。默认使用容器 root 身份但 capabilities 仅 NET_RAW；这不是“任意非 root 用户都验证通过”的承诺。关闭 promiscuous 模式。`--check-config` 和离线回放不需要 NET_RAW。选择 `lo` 抓回环，`any` 的 SLL/SLL2 由解析器处理；重复镜像/多接口观测不自动去重。
 
@@ -63,7 +65,8 @@ docker run -d --name my-passive-monitor \
 |---|---|---|
 | `LISTEN_<数字>` | 必填至少一项 | `tcp\|udp IP port[,start-end]`，编号可不连续，重复/相邻范围合并 |
 | `CAPTURE_INTERFACE` | `eth0` | 一个接口名 |
-| `LOG_FILE` | `/dev/stdout` | `/dev/stdout`、`-`、额外别名 `stdout`，或普通文件；自动创建父目录，追加 |
+| `LOG_FILE` | `/dev/stdout` | 容器内日志路径；普通文件自动创建父目录、同日追加、跨日轮转；标准流/字符设备不轮转 |
+| `LOG_ROTATE_SUFFIX` | `.%Y%m%d` | 旧文件后缀日期格式，默认生成 `.YYYYMMDD`；例如 `.%Y-%m-%d.bak` |
 | `LOG_FORMAT` | 见下 | 白名单模板；禁止控制字符（TAB 除外），最大 65536 字节 |
 | `TZ` | `UTC` | 已安装的 IANA 时区；无效时非零退出 |
 | `IGNORE_CHECKSUMS` | `true` | `true/false/1/0`；false 真正验证 IPv4 与完整 TCP/UDP 校验和，分片先重组 |
@@ -91,6 +94,29 @@ $remote_addr:$remote_port - [$time_iso8601] $protocol in_bytes=$bytes_received o
 
 ### 日志轮转与停止
 
+普通文件按 `TZ` 的本地日期每日轮转；例如 `TZ=Asia/Shanghai` 时，10 月 26 日零点将
+`/logs/access.log` 重命名为 `/logs/access.log.20261025`，然后创建新的 `/logs/access.log`。
+归档日期属于**旧文件**，使用输出时的系统墙钟，与 PCAP 包时间无关。
+抓包循环空闲时也检查日期、每次写入前也检查，无需等待下一条日志；阻塞中的输出只能在恢复后轮转或按输出截止时间失败，不承诺硬实时零点执行。
+
+环境变量配置示例（加在上述 `docker run` 的镜像名前）：
+
+```sh
+-e LOG_FILE=/logs/access.log \
+-e 'LOG_ROTATE_SUFFIX=.%Y%m%d' \
+-e TZ=Asia/Shanghai \
+-v "$PWD/logs:/logs"
+```
+
+- 后缀支持 `%Y`（四位年）、`%y`（两位年）、`%m`、`%d`、`%j`（年内日序）、`%F`（`YYYY-MM-DD`）、`%%`，以及普通字面字符；非空、最多 128 字节，不允许目录分隔符、控制字符和其他 `%` 指令。
+- 已有同名归档不会覆盖，依次使用 `.1`、`.2` 等附加编号；最多尝试 10000 个名字，仍冲突则报错退出。
+- 同日重启继续追加；非空旧文件跨日重启时，按其修改日期归档后创建新文件。空文件启动时从当日计时。停机跳过的日期不补造文件；运行中时钟回拨不反复轮转。
+- `/dev/stdout`、`-`、`stdout`、`/dev/stderr`、`stderr`、`/dev/fd/1`、`/dev/fd/2`、`/proc/self/fd/1`、`/proc/self/fd/2`，以及 `/dev/null` 等字符设备均不轮转；即使标准输出被 shell 重定向到普通文件，仍不轮转。其他命名管道不作为日志文件接受。
+- 普通文件的符号链接保持不变，轮转其实际目标文件。一个日志路径仅供一个实例写入，不支持多进程共享轮转。
+- 轮转/新建失败会非零退出并输出错误，不悄悄覆盖归档或丢弃记录。新文件权限为 `0640`（受 umask 约束）。目前不自动压缩、过期删除或限制归档总量，请单独管理磁盘保留策略。
+
+仍兼容手动外部轮转；若选择这个方式，重命名后需要 HUP，目录映射本身不会通知进程重新打开文件。不要同时让多个轮转器管理同一路径：
+
 ```sh
 mv logs/access.log logs/access.log.1
 docker kill --signal HUP my-passive-monitor
@@ -98,7 +124,7 @@ docker kill --signal HUP my-passive-monitor
 docker stop --time 20 my-passive-monitor  # Docker 截止时间应大于 SHUTDOWN_TIMEOUT
 ```
 
-重启追加原文件，不覆盖。普通文件追加写，无用户态日志队列；每条立即 write，不保证断电后的 fsync 持久性。输出阻塞时**反压抓包**，可能导致内核丢包；超过截止时间非零退出并明确提示可能丢失记录。不以无界队列掩盖阻塞。普通停止仅输出仍保留的状态，不承诺已排空所有网卡/内核缓冲；进程对可中断 I/O 有关闭截止时间；内核不可中断的 D 状态/NFS 故障不能保证由用户态定时器解除。SIGKILL/OOM/主机故障不能排空。
+同日重启追加原文件；跨日按上述规则归档，不覆盖旧记录。普通文件追加写，无用户态日志队列；每条立即 write，不保证断电后的 fsync 持久性。输出阻塞时**反压抓包**，可能导致内核丢包；超过截止时间非零退出并明确提示可能丢失记录。不以无界队列掩盖阻塞。普通停止仅输出仍保留的状态，不承诺已排空所有网卡/内核缓冲；进程对可中断 I/O 有关闭截止时间；内核不可中断的 D 状态/NFS 故障不能保证由用户态定时器解除。SIGKILL/OOM/主机故障不能排空。
 
 ### 离线回放
 
@@ -134,6 +160,8 @@ docker run --rm --network none --cap-drop ALL --read-only \
 python3 tests/differential.py
 python3 tests/tcp_cycles.py  # 离线 10000 TCP SYN 状态，三轮过期；不是实网 TCP 压测
 python3 -m unittest discover -s tests -p 'test_*.py' -v
+# 仅每日轮转测试（测试容器内注入墙钟，宿主机时钟不变）：
+python3 -m unittest discover -s tests -p 'test_rotation.py' -v
 
 # 若没有旧镜像，可从只读复制的旧源码构建独立参考镜像：
 docker build -t rust-pcap-log:zeek-reference tests/reference/legacy
@@ -145,6 +173,8 @@ python3 tests/benchmark.py --image zeek-monitor:memory-optimized \
 python3 tests/benchmark.py --image zeek-monitor:memory-optimized \
   --image rust-pcap-log:test --repeats 3 --extended --output .artifacts/memory/extended.json
 ```
+
+`test_rotation.py` 使用挂载的宿主机临时目录，并通过测试专用 `LD_PRELOAD` 库模拟 UTC/上海零点，验证空闲轮转、新文件写入、归档冲突、重启、标准输出跳过；这是加速跨日测试，不是实际等待 24 小时或长期运行验收。编译测试库使用 `RUST_BUILD_IMAGE`（默认 `rust-pcap-log:build-test`），不向生产镜像添加测试时钟。
 
 发送器是独立 Python 测试容器/独立 cgroup，仅共享隔离网络命名空间。Rust 镜像没有 Python。默认测试发送镜像为 `python:3.13-slim-bookworm`；`SENDER_IMAGE`、`RUST_TEST_IMAGE`、`ZEEK_TEST_IMAGE` 可覆盖。
 

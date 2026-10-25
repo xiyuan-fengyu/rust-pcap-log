@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-25",
+  "platform": "Docker Desktop Linux/amd64",
+  "images": [
+    {
+      "tags": [
+        "rust-pcap-log:rotation-test"
+      ],
+      "id": "sha256:1f4253f1c69f91103315c38945e5239bc29f91b0c7adc96f4508107345db268b"
+    },
+    {
+      "tags": [
+        "rust-pcap-log:rotation-build"
+      ],
+      "id": "sha256:000c97c3ced8d31cb1071267c893598a90080efe4bf9bd0bc78652ceeb7cfc20"
+    }
+  ],
+  "build": "Current sources rebuilt offline using existing build/runtime base images and BuildKit registry cache. No clean dependency installation claimed.",
+  "verification": {
+    "unit_passed": 30,
+    "container_passed": 15,
+    "pcap_cases": 58,
+    "pcap_equal": 55,
+    "pcap_existing_rejection_gates": 3,
+    "tcp_records_per_implementation": 30000
+  },
+  "clock": "Test-only LD_PRELOAD time() override; host wall clock and monotonic capture clock unchanged. Real mounted directories, file operations and UDP capture; not a 24-hour soak test.",
+  "source_sha256": {
+    "src/config.rs": "be7a67183b4baa6e4575f0b0c55ba5e0e7067e9a7d164bdd4f4eae832099f6f2",
+    "src/engine.rs": "cbb8b26ec2001220387cb6f633a21969ba20cce46ada9b01d1c14fedfc59e68a",
+    "src/lib.rs": "256da86147f2eff7927f84e23f259e7dc986e4c70637c84939d6d5a65d69d6d7",
+    "src/main.rs": "cb0b6785bbb1010e8a0b6697a91148e73abe3cc05117a0675cb528966fe5ad4a",
+    "src/output/rotation_tests.rs": "799782d7e5032cd43306f5be2cc8f47825dfc30e7f0f319013bf546ba0de06fa",
+    "src/output.rs": "2531361072c50461fbd7e26339ddfdde7aec56372ffc783fda134882e126003d",
+    "src/packet.rs": "babfdb7d49cf824860ee86a9327d425df69b05d08571bd738eaa5e08ec96113a",
+    "src/rotation.rs": "8b34c022d6360a84910aaceeea3eb9065f6d52f9bd6b9fa00c76ca72ad5278f6",
+    "tests/test_rotation.py": "4db7f4f5c25d9371e4762c04cb2a57b859b28a67f9559192cb0a7614992eacc2",
+    "Cargo.toml": "440dfbd4abe4ea84981d40c563155e6db688989c6ec17cdf4041b4da79f3ea17",
+    "Cargo.lock": "08be46be54241a4c874fae1d182d2ac11824ff6c7facad375870bb29de343d83"
+  },
+  "test_logs": {
+    "unit": [
+      "#7 1.787 test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s",
+      "#7 1.792 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "#7 1.848 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "regression": [
+      "test_blocked_output_has_deadline (test_failures.Failures.test_blocked_output_has_deadline) ... ok",
+      "test_fifo_log_rejected_without_waiting (test_failures.Failures.test_fifo_log_rejected_without_waiting) ... ok",
+      "test_fragment_limit_no_fake_session (test_failures.Failures.test_fragment_limit_no_fake_session) ... ok",
+      "test_invalid_ip_checksum_rejected_before_session (test_failures.Failures.test_invalid_ip_checksum_rejected_before_session) ... ok",
+      "test_local_discovery_failure_and_empty_fail_closed (test_failures.Failures.test_local_discovery_failure_and_empty_fail_closed) ... ok",
+      "test_output_write_failure (test_failures.Failures.test_output_write_failure) ... ok",
+      "test_session_limit_no_eviction_as_complete_record (test_failures.Failures.test_session_limit_no_eviction_as_complete_record) ... ok",
+      "test_unwritable_log_path (test_failures.Failures.test_unwritable_log_path) ... ok",
+      "test_ipv6_loopback_any_cooked (test_live.Live.test_ipv6_loopback_any_cooked) ... ok",
+      "test_minimum_permissions_and_errors (test_live.Live.test_minimum_permissions_and_errors) ... ok",
+      "test_shared_namespace_rotation_and_append (test_live.Live.test_shared_namespace_rotation_and_append) ... ok",
+      "test_idle_midnight_shanghai_custom_suffix_and_collision (test_rotation.Rotation.test_idle_midnight_shanghai_custom_suffix_and_collision) ... ok",
+      "test_idle_midnight_utc_default_suffix_and_collision (test_rotation.Rotation.test_idle_midnight_utc_default_suffix_and_collision) ... ok",
+      "test_redirected_stdout_does_not_rotate (test_rotation.Rotation.test_redirected_stdout_does_not_rotate) ... ok",
+      "test_startup_old_file_and_invalid_suffix (test_rotation.Rotation.test_startup_old_file_and_invalid_suffix) ... ok",
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 15 tests in 38.099s",
+      "",
+      "OK"
+    ],
+    "differential": [
+      "sessions EQUAL",
+      "partial EQUAL",
+      "half_close EQUAL",
+      "full_close EQUAL",
+      "rst_tail EQUAL",
+      "retransmit EQUAL",
+      "syn_reuse EQUAL",
+      "closed_reuse EQUAL",
+      "midstream_syn_reuse EQUAL",
+      "syn_timeout EQUAL",
+      "tcp_idle_timeout EQUAL",
+      "udp_timeout EQUAL",
+      "ipv6_atomic_fragment EQUAL",
+      "fragment_duration EQUAL",
+      "synack_unfinished EQUAL",
+      "ack_midstream_tail EQUAL",
+      "rst_repeat_tail EQUAL",
+      "synack_first EQUAL",
+      "ipv4_fragments EQUAL",
+      "ipv4_out_of_order EQUAL",
+      "ipv4_duplicate EQUAL",
+      "ipv4_missing_first EQUAL",
+      "ipv4_conflict EQUAL",
+      "ipv6_fragments EQUAL",
+      "ipv6_out_of_order EQUAL",
+      "ipv6_duplicate EQUAL",
+      "ipv6_missing_first EQUAL",
+      "ipv6_conflict EQUAL",
+      "fragment_expiry EQUAL",
+      "ipv4_fragment_options EQUAL",
+      "ipv4_fragment_options_ordered EQUAL",
+      "tcp_fragments EQUAL",
+      "ipv6_fragment_extension_after EQUAL",
+      "ipv6_fragment_extension_before EQUAL",
+      "ipv6_extensions EQUAL",
+      "vlan EQUAL",
+      "qinq EQUAL",
+      "sll EQUAL",
+      "sll2 EQUAL",
+      "raw EQUAL",
+      "truncated GATE",
+      "malformed GATE",
+      "bad_checksum EQUAL",
+      "udp_bad EQUAL",
+      "udp_bad_first EQUAL",
+      "udp_bad_last EQUAL",
+      "udp_bad_both EQUAL",
+      "tcp_bad EQUAL",
+      "tcp_bad_first EQUAL",
+      "tcp_bad_last EQUAL",
+      "tcp_bad_both EQUAL",
+      "ipip EQUAL",
+      "gre EQUAL",
+      "gre_ethernet EQUAL",
+      "vxlan EQUAL",
+      "geneve_gate GATE",
+      "overlap_first_lower EQUAL",
+      "overlap_first_higher EQUAL",
+      "58 cases; 3 explicit compatibility gates; failures=[]"
+    ],
+    "tcp-cycles": [
+      "{'expected_records': 30000, 'old_exact': True, 'new_exact': True}"
+    ]
+  },
+  "rotation_cases": [
+    {
+      "clock": "LD_PRELOAD time() override; monotonic capture clock unchanged",
+      "settings": {
+        "LISTEN_0": "udp 127.0.0.1 19181",
+        "CAPTURE_INTERFACE": "lo",
+        "LOG_FILE": "/logs/access.log",
+        "LOG_ROTATE_SUFFIX": ".%Y-%m-%d.bak",
+        "TZ": "Asia/Shanghai",
+        "UDP_INACTIVITY_TIMEOUT": "1",
+        "STATS_INTERVAL": "1",
+        "LD_PRELOAD": "/clock/clock.so",
+        "RPL_TEST_CLOCK": "/logs/now"
+      },
+      "exit": 0,
+      "stderr": "[rust-pcap-log] ready: libpcap link=1 buffer_mb=8 snaplen=262144 promisc=false live=true timezone=Asia/Shanghai thread_count=1\n[rust-pcap-log] log rotated: /logs/access.log -> /logs/access.log.2026-10-25.bak.1\n[rust-pcap-log] stats: phase=periodic frames=2 parsed=2 accepted=2 filtered=0 emitted=0 active=1 capacity=3 timers=1 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n[rust-pcap-log] stats: phase=final frames=2 parsed=2 accepted=2 filtered=0 emitted=1 active=0 capacity=0 timers=0 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n",
+      "active": "127.0.0.2:20000 - [2026-10-26T00:00:00+08:00] UDP in_bytes=60 out_bytes=60 session_time=0.000 server=127.0.0.1:19181\n",
+      "files": [
+        "access.log",
+        "access.log.2026-10-25.bak",
+        "access.log.2026-10-25.bak.1",
+        "now"
+      ]
+    },
+    {
+      "clock": "LD_PRELOAD time() override; monotonic capture clock unchanged",
+      "settings": {
+        "LISTEN_0": "udp 127.0.0.1 19181",
+        "CAPTURE_INTERFACE": "lo",
+        "LOG_FILE": "/logs/access.log",
+        "LOG_ROTATE_SUFFIX": ".%Y%m%d",
+        "TZ": "UTC",
+        "UDP_INACTIVITY_TIMEOUT": "1",
+        "STATS_INTERVAL": "1",
+        "LD_PRELOAD": "/clock/clock.so",
+        "RPL_TEST_CLOCK": "/logs/now"
+      },
+      "exit": 0,
+      "stderr": "[rust-pcap-log] ready: libpcap link=1 buffer_mb=8 snaplen=262144 promisc=false live=true timezone=UTC thread_count=1\n[rust-pcap-log] log rotated: /logs/access.log -> /logs/access.log.20261025.1\n[rust-pcap-log] stats: phase=periodic frames=2 parsed=2 accepted=2 filtered=0 emitted=0 active=1 capacity=3 timers=1 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n[rust-pcap-log] stats: phase=periodic frames=2 parsed=2 accepted=2 filtered=0 emitted=1 active=0 capacity=3 timers=0 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n[rust-pcap-log] stats: phase=final frames=2 parsed=2 accepted=2 filtered=0 emitted=1 active=0 capacity=0 timers=0 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n",
+      "active": "127.0.0.2:20000 - [2026-10-26T00:00:00+00:00] UDP in_bytes=60 out_bytes=60 session_time=0.000 server=127.0.0.1:19181\n",
+      "files": [
+        "access.log",
+        "access.log.20261025",
+        "access.log.20261025.1",
+        "now"
+      ]
+    },
+    {
+      "clock": "LD_PRELOAD time() override; monotonic capture clock unchanged",
+      "settings": {
+        "LISTEN_0": "udp 127.0.0.1 19181",
+        "CAPTURE_INTERFACE": "lo",
+        "LOG_FILE": "/dev/stdout",
+        "LOG_ROTATE_SUFFIX": ".%Y%m%d",
+        "TZ": "UTC",
+        "UDP_INACTIVITY_TIMEOUT": "1",
+        "STATS_INTERVAL": "1",
+        "LD_PRELOAD": "/clock/clock.so",
+        "RPL_TEST_CLOCK": "/logs/now"
+      },
+      "exit": 0,
+      "stderr": "[rust-pcap-log] ready: libpcap link=1 buffer_mb=8 snaplen=262144 promisc=false live=true timezone=UTC thread_count=1\n[rust-pcap-log] stats: phase=periodic frames=2 parsed=2 accepted=2 filtered=0 emitted=0 active=1 capacity=3 timers=1 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n[rust-pcap-log] stats: phase=final frames=2 parsed=2 accepted=2 filtered=0 emitted=1 active=0 capacity=0 timers=0 peak=1 session_limit=0 truncated=0 malformed=0 checksum_rejected=0 unsupported=0 fragment_limit=0 fragment_conflict=0 overlap_conflicting_bytes=0 fragments=0 fragment_bytes=0 fragments_completed=0 fragments_expired=0 timestamp_regressions=0 ip_bytes=120 reused=0\n[rust-pcap-log] capture: received=4 dropped=0 if_dropped=0 (capture-system counters; NOT end-to-end completeness)\n",
+      "active": "before midnight\n127.0.0.2:20000 - [2026-10-26T00:00:00+00:00] UDP in_bytes=60 out_bytes=60 session_time=0.000 server=127.0.0.1:19181\n",
+      "files": [
+        "access.log",
+        "access.log.20261025",
+        "now"
+      ]
+    }
+  ],
+  "production_changed": false,
+  "previous_image_archive_updated": false
+}

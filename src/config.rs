@@ -5,7 +5,7 @@ use std::{
     path::Path,
 };
 
-pub const DEFAULT_FORMAT: &str = "$remote_addr:$remote_port - [$time_iso8601] $protocol in_bytes=$bytes_received out_bytes=$bytes_sent session_time=$session_time server=$server_addr:$server_port";
+pub const DEFAULT_FORMAT: &str = "$remote_addr:$remote_port - [$time_iso8601] $protocol server=$server_addr:$server_port in_bytes=$bytes_received out_bytes=$bytes_sent session_time=$session_time";
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Address(pub [u8; 16]);
 impl Address {

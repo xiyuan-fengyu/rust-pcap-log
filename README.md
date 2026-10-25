@@ -85,7 +85,7 @@ docker run -d --name my-passive-monitor \
 默认模板：
 
 ```text
-$remote_addr:$remote_port - [$time_iso8601] $protocol in_bytes=$bytes_received out_bytes=$bytes_sent session_time=$session_time server=$server_addr:$server_port
+$remote_addr:$remote_port - [$time_iso8601] $protocol server=$server_addr:$server_port in_bytes=$bytes_received out_bytes=$bytes_sent session_time=$session_time
 ```
 
 允许变量：`remote_addr remote_port time_iso8601 protocol bytes_sent bytes_received session_time server_addr server_port`。支持 `$name`、`${name}`、`$$`；不执行 shell、不递归展开。`bytes_sent` 为 server→remote，`bytes_received` 为 remote→server；duration 三位小数。IP 字节不是 payload；例如 IPv4 UDP 32-byte payload 每方向计 60 bytes。分片、ACK、重传和 duration 的特殊口径见兼容文档。

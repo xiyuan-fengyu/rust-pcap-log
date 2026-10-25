@@ -394,6 +394,45 @@ mod tests {
 }
 #[cfg(test)]mod render_tests {
     use super::*;use crate::{config::Rules,engine::Engine,packet::Packet};use std::collections::{BTreeMap,HashSet};
+    #[test]
+    fn default_format_matches_requested_field_order() {
+        let config = crate::config::Config::parse(
+            &BTreeMap::from([("LISTEN_0".into(), "udp 172.23.0.2 13478".into())]),
+            HashSet::new(),
+        ).unwrap();
+        let mut engine = Engine::new(config.rules, 1, config.udp_timeout);
+        let request = Packet {
+            checksum_valid: true,
+            src: "113.250.249.76".parse().unwrap(),
+            dst: "172.23.0.2".parse().unwrap(),
+            sport: 3445,
+            dport: 13478,
+            proto: 17,
+            ip_bytes: 68,
+            seq: 0,
+            ack: 0,
+            flags: 0,
+            payload_len: 40,
+        };
+        let reply = Packet {
+            src: request.dst,
+            dst: request.src,
+            sport: request.dport,
+            dport: request.sport,
+            ip_bytes: 72,
+            payload_len: 44,
+            ..request
+        };
+        engine.process(request, 0, 0, &mut |_| Ok(())).unwrap();
+        engine.process(reply, 0, 0, &mut |_| Ok(())).unwrap();
+        let mut lines = vec![];
+        engine.drain(&mut |session| {
+            lines.push(config.template.render(session, "2026-10-25T15:08:44+08:00"));
+            Ok(())
+        }).unwrap();
+        assert_eq!(lines, ["113.250.249.76:3445 - [2026-10-25T15:08:44+08:00] UDP server=172.23.0.2:13478 in_bytes=68 out_bytes=72 session_time=0.000\n"]);
+    }
+
     #[test]fn render_all_fields_and_no_recursive_expansion(){
         let rules=Rules::parse(&BTreeMap::from([("LISTEN_1".into(),"udp 127.0.0.1 53".into())]),HashSet::new()).unwrap();let mut e=Engine::new(rules,1,60_000_000);
         let p=Packet{checksum_valid:true,src:"127.0.0.2".parse().unwrap(),dst:"127.0.0.1".parse().unwrap(),sport:1234,dport:53,proto:17,ip_bytes:32,seq:0,ack:0,flags:0,payload_len:4};
